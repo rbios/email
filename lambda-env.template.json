@@ -1,0 +1,7 @@
+{
+  "Variables": {
+    "FORWARD_TO_EMAIL": "your-email@example.com",
+    "DOMAIN": "rbios.net",
+    "FROM_EMAIL": "noreply@rbios.net"
+  }
+}

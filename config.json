@@ -1,0 +1,14 @@
+{
+  "forwardTo": "your-personal-email@gmail.com",
+  "fromEmail": "noreply@rbios.net",
+  "domain": "rbios.net",
+  "catchAll": true,
+  "note": "With catchAll enabled, ALL emails to any address @rbios.net will forward to the 'forwardTo' address",
+  "awsResources": {
+    "bucketName": "rbios-email-storage",
+    "functionName": "rbios-email-forwarder",
+    "roleName": "rbios-email-forwarder-role",
+    "policyName": "rbios-email-forwarder-policy",
+    "region": "us-east-1"
+  }
+}

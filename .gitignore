@@ -1,0 +1,44 @@
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# AWS deployment packages and dependencies
+*.zip
+package/
+lambda-deployment.zip
+rbios-email-forwarder.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local configuration (don't commit personal email addresses)
+config.local.json
+
+# Sensitive AWS configuration (these files contain account-specific ARNs)
+# Keep the template versions for reference but not the actual deployed ones
+receipt-rule.json
+lambda-env.json
+s3-bucket-policy.json
+trust-policy.json
+ses-s3-policy.json

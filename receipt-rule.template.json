@@ -1,0 +1,20 @@
+{
+  "Name": "rbios-email-forwarder-rule",
+  "Enabled": true,
+  "TlsPolicy": "Optional",
+  "Recipients": ["rbios.net"],
+  "Actions": [
+    {
+      "S3Action": {
+        "BucketName": "rbios-email-bucket",
+        "ObjectKeyPrefix": "emails/"
+      }
+    },
+    {
+      "LambdaAction": {
+        "FunctionArn": "arn:aws:lambda:REGION:ACCOUNT_ID:function:rbios-email-forwarder"
+      }
+    }
+  ],
+  "ScanEnabled": true
+}
