@@ -83,7 +83,44 @@ Once DNS propagates (15-30 minutes), send a test email to `test@rbios.net` and c
 - Domain rbios.net with Route53 hosted zone
 - Access to SES (Simple Email Service)
 
-### 2. Configure Email Forwarding
+### 2. DNS Configuration
+
+**Important**: Before the email forwarding will work, you need to configure DNS records:
+
+#### Required DNS Records:
+
+1. **MX Record** (for email receiving):
+   ```
+   Name: rbios.net
+   Type: MX
+   Value: 10 inbound-smtp.us-east-1.amazonaws.com
+   TTL: 300
+   ```
+
+2. **TXT Record** (for SES domain verification):
+   ```
+   Name: _amazonses.rbios.net
+   Type: TXT
+   Value: "PCUaDtGJnd4oBOArD3QvjRcugl0r7GIoR04uBkG8I/o="
+   TTL: 300
+   ```
+
+#### Check DNS Status:
+```bash
+# Verify MX record
+dig MX rbios.net
+
+# Verify TXT record
+dig TXT _amazonses.rbios.net
+
+# Check SES domain verification status
+aws ses get-identity-verification-attributes --identities rbios.net
+
+# Monitor verification (can take up to 72 hours)
+./check-verification.sh
+```
+
+### 3. Configure Email Forwarding
 
 The system is configured to forward ALL emails to `ryanmette@duck.com`:
 
@@ -102,11 +139,11 @@ FROM_EMAIL=noreply@rbios.net
 - `randomname@rbios.net` → ryanmette@duck.com
 - `anything@rbios.net` → ryanmette@duck.com
 
-### 3. Deployment Commands Used
+### 4. Deployment Commands Used
 
 The deployment was completed using AWS CLI. See `DEPLOYMENT_LOG.md` for complete details.
 
-### 4. Verification Status Check
+### 5. Verification Status Check
 
 Check verification status:
 

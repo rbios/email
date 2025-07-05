@@ -544,3 +544,58 @@ aws iam put-role-policy --role-name rbios-email-forwarder-role --policy-name SES
 **Status**: ✅ Lambda function is now properly configured and tested. Log monitoring is working correctly.
 
 ---
+
+## DNS Configuration for Email Receiving
+
+### 2025-01-05: DNS Records Setup
+
+**Issue**: Domain `rbios.net` was missing DNS records required for email receiving.
+
+**Error**: 
+```
+DNS Error: DNS type 'mx' lookup of rbios.net responded with code NOERROR
+DNS type 'mx' lookup of rbios.net had no relevant answers.
+```
+
+**Solution**: Added required DNS records to Route53 hosted zone `Z041460211TNUBYCOAMFZ`:
+
+1. **MX Record**: 
+   - Name: `rbios.net`
+   - Type: `MX`
+   - Value: `10 inbound-smtp.us-east-1.amazonaws.com`
+   - TTL: `300`
+
+2. **SES Verification TXT Record**:
+   - Name: `_amazonses.rbios.net`
+   - Type: `TXT`
+   - Value: `"PCUaDtGJnd4oBOArD3QvjRcugl0r7GIoR04uBkG8I/o="`
+   - TTL: `300`
+
+**Commands Used**:
+```bash
+# Added MX record for email receiving
+aws route53 change-resource-record-sets --hosted-zone-id Z041460211TNUBYCOAMFZ --change-batch file://mx-record-change.json
+
+# Added TXT record for domain verification
+aws route53 change-resource-record-sets --hosted-zone-id Z041460211TNUBYCOAMFZ --change-batch file://domain-verification-change.json
+```
+
+**Verification**:
+```bash
+# Check MX record
+dig MX rbios.net
+# Returns: rbios.net. 300 IN MX 10 inbound-smtp.us-east-1.amazonaws.com.
+
+# Check verification TXT record
+dig TXT _amazonses.rbios.net
+# Returns: _amazonses.rbios.net. 300 IN TXT "PCUaDtGJnd4oBOArD3QvjRcugl0r7GIoR04uBkG8I/o="
+```
+
+**Status**: 
+- ✅ DNS records are live and propagated
+- ⏳ SES domain verification is pending (can take up to 72 hours)
+- 📧 Email delivery should work once verification completes
+
+**Monitoring**: Use `./check-verification.sh` to monitor domain verification status.
+
+---

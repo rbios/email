@@ -49,8 +49,9 @@ def lambda_handler(event, context):
             )
 
             # Get the raw email from S3 (SES stores it there)
-            bucket = receipt["action"]["bucketName"]
-            key = receipt["action"]["objectKey"]
+            # The bucket name is fixed based on our setup
+            bucket = "rbios-email-bucket"
+            key = f"emails/{message_id}"
 
             # Download the email from S3
             response = s3.get_object(Bucket=bucket, Key=key)
