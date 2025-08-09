@@ -90,6 +90,7 @@ Once DNS propagates (15-30 minutes), send a test email to `test@rbios.net` and c
 #### Required DNS Records:
 
 1. **MX Record** (for email receiving):
+
    ```
    Name: rbios.net
    Type: MX
@@ -106,6 +107,7 @@ Once DNS propagates (15-30 minutes), send a test email to `test@rbios.net` and c
    ```
 
 #### Check DNS Status:
+
 ```bash
 # Verify MX record
 dig MX rbios.net

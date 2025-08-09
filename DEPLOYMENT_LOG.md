@@ -551,7 +551,8 @@ aws iam put-role-policy --role-name rbios-email-forwarder-role --policy-name SES
 
 **Issue**: Domain `rbios.net` was missing DNS records required for email receiving.
 
-**Error**: 
+**Error**:
+
 ```
 DNS Error: DNS type 'mx' lookup of rbios.net responded with code NOERROR
 DNS type 'mx' lookup of rbios.net had no relevant answers.
@@ -559,7 +560,8 @@ DNS type 'mx' lookup of rbios.net had no relevant answers.
 
 **Solution**: Added required DNS records to Route53 hosted zone `Z041460211TNUBYCOAMFZ`:
 
-1. **MX Record**: 
+1. **MX Record**:
+
    - Name: `rbios.net`
    - Type: `MX`
    - Value: `10 inbound-smtp.us-east-1.amazonaws.com`
@@ -572,6 +574,7 @@ DNS type 'mx' lookup of rbios.net had no relevant answers.
    - TTL: `300`
 
 **Commands Used**:
+
 ```bash
 # Added MX record for email receiving
 aws route53 change-resource-record-sets --hosted-zone-id Z041460211TNUBYCOAMFZ --change-batch file://mx-record-change.json
@@ -581,6 +584,7 @@ aws route53 change-resource-record-sets --hosted-zone-id Z041460211TNUBYCOAMFZ -
 ```
 
 **Verification**:
+
 ```bash
 # Check MX record
 dig MX rbios.net
@@ -591,7 +595,8 @@ dig TXT _amazonses.rbios.net
 # Returns: _amazonses.rbios.net. 300 IN TXT "PCUaDtGJnd4oBOArD3QvjRcugl0r7GIoR04uBkG8I/o="
 ```
 
-**Status**: 
+**Status**:
+
 - ✅ DNS records are live and propagated
 - ⏳ SES domain verification is pending (can take up to 72 hours)
 - 📧 Email delivery should work once verification completes
