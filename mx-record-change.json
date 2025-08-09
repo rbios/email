@@ -1,0 +1,17 @@
+{
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "rbios.net",
+        "Type": "MX",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "10 inbound-smtp.us-east-1.amazonaws.com"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "_amazonses.rbios.net",
+        "Type": "TXT",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "\"PCUaDtGJnd4oBOArD3QvjRcugl0r7GIoR04uBkG8I/o=\""
+          }
+        ]
+      }
+    }
+  ]
+}
